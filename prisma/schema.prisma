@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./prisma/dev.db"
+}
+
+model User {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  password    String
+  semester    String
+  tracks      String   // Stored as JSON string: ["Web Development", "Machine Learning"]
+  webDevLevel String   @default("Not Evaluated")
+  mlLevel     String   @default("Not Evaluated")
+  webDevScore Int?
+  mlScore     Int?
+  createdAt   DateTime @default(now())
+}
+
+model Assessment {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  type        String
+  questions   String   // Stored as JSON string
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
